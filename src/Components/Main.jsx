@@ -1,30 +1,110 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Main() {
+
+  const [currentOp, setCurrentOp] = useState("");
+  const [previousOp, setPreviousOp] = useState("");
+  const [arithmetic, setArithmetic] = useState("")
+  
+    // Clears the screen
+  const clear = () => {
+    setCurrentOp("");
+    setPreviousOp("");
+    setArithmetic("");
+  };
+
+  // Deletes the currentOp
+  const del = () =>{
+    setCurrentOp("");
+  }
+
+  // Handles the numerical input
+  const handleInput = (e) => {
+    setCurrentOp(e.target.value);
+    
+  };
+
+  // Responsible for setting the state of the operator and previousOp whenever an operator button is clicked
+  const operator = (e) => {
+      setPreviousOp(currentOp)
+      setArithmetic(e.target.value)
+  };
+
+  // Does the computation based on the current operator
+  const compute = () =>{
+    // This switch case looks at the state of the operator/arithmetic to determine which case to execute
+    switch(arithmetic){
+
+        // Using parseFloat instead of parseInt to accommodate for numbers with decimals 
+        case "+": setCurrentOp(parseFloat(previousOp) + parseFloat(currentOp));
+        break;
+        case "-": setCurrentOp(parseFloat(previousOp) - parseFloat(currentOp));
+        break;
+        case "*": setCurrentOp(parseFloat(previousOp) * parseFloat(currentOp));
+        break;
+        case "/": setCurrentOp(parseFloat(previousOp) / parseFloat(currentOp));
+        break;
+    }
+    // Clears the operator after each computation
+    setArithmetic("")
+  }
+
   return (
     <div className="calculator-grid">
       <div className="screen">
-          <div className="previousOp">previous</div>
-          <div className="currentOp">current</div>
+        <div className="previousOp">{previousOp}</div>
+        <div className="currentOp">{arithmetic + " " + currentOp}</div>
       </div>
-      <button className="large-btn">AC</button>
-      <button>DEL</button>
-      <button>/</button>
-      <button>9</button>
-      <button>8</button>
-      <button>7</button>
-      <button>*</button>
-      <button>6</button>
-      <button>5</button>
-      <button>4</button>
-      <button>+</button>
-      <button>3</button>
-      <button>2</button>
-      <button>1</button>
-      <button>-</button>
+      <button onClick={clear} className="large-btn">
+        AC
+      </button>
+      <button onClick={del}>DEL</button>
+
+      <button onClick={operator} value="/">/</button>
+
+      <button onClick={handleInput} value="9">
+        9
+      </button>
+      <button onClick={handleInput} value="8">
+        8
+      </button>
+      <button onClick={handleInput} value="7">
+        7
+      </button>
+
+      <button onClick={operator} value="*">*</button>
+
+      <button onClick={handleInput} value="6">
+        6
+      </button>
+      <button onClick={handleInput} value="5">
+        5
+      </button>
+      <button onClick={handleInput} value="4">
+        4
+      </button>
+
+      <button onClick={operator} value="+">+</button>
+
+      <button onClick={handleInput} value="3">
+        3
+      </button>
+      <button onClick={handleInput} value="2">
+        2
+      </button>
+      <button onClick={handleInput} value="1">
+        1
+      </button>
+
+      <button onClick={operator} value="-">-</button>
+
       <button>.</button>
-      <button>0</button>
-      <button className="large-btn">=</button>
+      <button onClick={handleInput} value="0">
+        0
+      </button>
+      <button className="large-btn" onClick={compute}>
+        =
+      </button>
     </div>
   );
 }
