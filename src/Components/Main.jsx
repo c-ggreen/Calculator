@@ -20,12 +20,15 @@ function Main() {
 
   // Handles the numerical input
   const handleInput = (e) => {
-    setCurrentOp(e.target.value);
-    
+
+      setCurrentOp(currentOp.concat(e.target.value))
+
   };
 
   // Responsible for setting the state of the operator and previousOp whenever an operator button is clicked
+  // Also resets the currentOp
   const operator = (e) => {
+      setCurrentOp("")
       setPreviousOp(currentOp)
       setArithmetic(e.target.value)
   };
@@ -98,7 +101,7 @@ function Main() {
 
       <button onClick={operator} value="-">-</button>
 
-      <button>.</button>
+      <button onClick={handleInput} value=".">.</button>
       <button onClick={handleInput} value="0">
         0
       </button>
